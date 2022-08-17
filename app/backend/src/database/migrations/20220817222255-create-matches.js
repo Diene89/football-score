@@ -34,6 +34,16 @@ module.exports = {
         field: 'away_team',
         onDelete: 'CASCADE',
       },
+      awayTeamGoals: {
+        type: Sequelize.INTEGER,
+        allowNull: false, 
+        field: 'away_team_goals'
+      },
+      inProgress: {
+        type: Sequelize.INTEGER,
+        allowNull: false, 
+        field: 'in_progress'
+      },
     })
   },
 
