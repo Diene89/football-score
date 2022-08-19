@@ -23,7 +23,7 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-    this.app.use('/login', userRoutes)
+    this.app.use('/login', userRoutes);
   }
 
   public start(PORT: string | number):void {

@@ -4,33 +4,33 @@ import db from '.';
 class User extends Model {
   id!: number;
   username!: string;
-  role!: string
-  email!: string
-  passaword!: string
+  role!: string;
+  email!: string;
+  passaword!: string;
 }
 
 User.init({
-  id: { 
+  id: {
     type: INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false, 
+    allowNull: false,
   },
   username: {
     type: STRING,
-    allowNull: false, 
+    allowNull: false,
   },
   role: {
     type: STRING,
-    allowNull: false, 
+    allowNull: false,
   },
   email: {
     type: STRING,
-    allowNull: false, 
+    allowNull: false,
   },
   password: {
     type: STRING,
-    allowNull: false, 
+    allowNull: false,
   },
 }, {
   modelName: 'users',
@@ -40,7 +40,7 @@ User.init({
 });
 
 /**
-  * `Workaround` para aplicar as associations em TS: 
+  * `Workaround` para aplicar as associations em TS:
   * Associations 1:N devem ficar em uma das instâncias de modelo
   * */
 

@@ -38,6 +38,7 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
+    "@types/joi": "^17.2.3",
     "bcrypt": "^5.0.1",
     "camelcase": "6.3.0",
     "express-async-errors": "^3.1.1",

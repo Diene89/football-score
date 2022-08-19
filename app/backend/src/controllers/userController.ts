@@ -2,11 +2,13 @@ import { Request, Response } from 'express';
 import UserService from '../services/userService';
 
 export default class UserController {
-    // constructor(private userService: IUser) { }
+  constructor(private userService: UserService) { }
 
-    async login(req: Request, res: Response): Promise<void> {
-        const token = await UserService.login(req.body);
+  async login(req: Request, res: Response): Promise<void> {
+    console.log('entreiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
 
-        res.status(200).json({ token })
-    }
+    const user = await this.userService.login(req.body);
+
+    res.status(200).json(user);
+  }
 }
