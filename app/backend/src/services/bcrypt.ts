@@ -1,8 +1,10 @@
 import * as bcrypt from 'bcryptjs';
 
 export default class PasswordService {
-  static decryptedPassword(dbPassword: string, reqPassword: string): boolean {
-    const compare = bcrypt.compareSync(reqPassword, dbPassword);
+  static encryptedPassword(dbPassword: string, reqPassword: string): boolean {
+    const encryptedPassword = bcrypt.hashSync(dbPassword);
+    const compare = bcrypt.compareSync(reqPassword, encryptedPassword);
+
     return compare;
   }
 }

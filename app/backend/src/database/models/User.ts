@@ -6,7 +6,7 @@ class User extends Model {
   username!: string;
   role!: string;
   email!: string;
-  passaword!: string;
+  password!: string;
 }
 
 User.init({
