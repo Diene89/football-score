@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
-import { ILogin, IUser } from '../interfaces/IUser';
 import User from '../database/models/User';
+import { ILogin, IUser } from '../interfaces/IUser';
 import createToken from '../middlewares/createToken';
 import PasswordService from './bcrypt';
 
@@ -37,11 +37,22 @@ export default class UserService implements ILogin {
   login = async ({ email, password }: ILogin) => {
     const user: IUser | null = await this.findOne(email);
 
-    if (!user) throw new Error();
-    const compare = PasswordService.encryptedPassword(user.password, password);
-    if (compare === true) {
-      const token = await createToken.jwt({ email, password });
-      return token;
+    if (!user) {
+      const e = new Error();
+      e.name = 'NotFoundError';
+      e.message = 'User not found/400';
+      throw e;
     }
+    console.log(password, 'password');
+    console.log(user.password, 'user password');
+    const compare = PasswordService.encryptedPassword(password, user.password);
+    if (compare === false) {
+      const e = new Error();
+      e.name = 'NotFoundError';
+      e.message = 'Password not found/400';
+      throw e;
+    }
+    const token = await createToken.jwt({ email, password });
+    return token;
   };
 }

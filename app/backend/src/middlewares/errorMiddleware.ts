@@ -1,7 +1,7 @@
 import { ErrorRequestHandler } from 'express';
 
 const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {
-  console.log(err, 'aquiiiiiiiiiiiiiiiiiiii');
+  console.log(err, 'meu erroooooo');
 
   const { message } = err;
   const result = message.split('/');
