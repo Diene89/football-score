@@ -10,14 +10,17 @@ export default class UserService implements ILogin {
   email: string;
   password: string;
 
-  validateBody = async (data: ILogin) => {
+  validateBody = (data: ILogin) => {
     const schema = Joi.object({
-      email: Joi.string().email().required().messages({
+      email: Joi.string().email().empty().required()
+        .messages({
+          'any.required': 'All fields must be filled/400',
+          'string.email': 'Incorrect email or password/401',
+        }),
+      password: Joi.string().empty().required().messages({
         'any.required': 'All fields must be filled/400',
-        'string.base': 'Incorrect email or password/401',
-        'string.email': 'Incorrect email or password/401',
+        'string.password': 'Incorrect email or password/401',
       }),
-      password: Joi.string().required(),
     });
     const { error } = schema.validate(data);
     if (error) throw error;
