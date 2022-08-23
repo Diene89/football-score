@@ -14,8 +14,8 @@ export default class UserService implements ILogin {
     const schema = Joi.object({
       email: Joi.string().email().required().messages({
         'any.required': 'All fields must be filled/400',
-        'string.base': 'Incorrect email or password/400',
-        'string.email': 'Incorrect email or password/400',
+        'string.base': 'Incorrect email or password/401',
+        'string.email': 'Incorrect email or password/401',
       }),
       password: Joi.string().required(),
     });
