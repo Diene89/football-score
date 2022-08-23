@@ -37,7 +37,7 @@ export default class UserService implements ILogin {
     if (!user) throw new Error();
     const compare = PasswordService.encryptedPassword(user.password, password);
     if (compare === true) {
-      const token = createToken.jwt({ email, password });
+      const token = await createToken.jwt({ email, password });
       return token;
     }
   };

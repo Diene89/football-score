@@ -8,6 +8,9 @@ import User from '../database/models/User';
 
 import { Response } from 'superagent';
 import { ILogin, IUser } from '../interfaces/IUser';
+import { IToken } from '../interfaces/IToken';
+import createToken from '../middlewares/createToken';
+import PasswordService from '../services/bcrypt';
 
 chai.use(chaiHttp);
 
@@ -26,24 +29,30 @@ const MockLogin: ILogin = {
   password: '123456',
 }
 
-describe('Login', () => {
-  beforeEach(() =>
-    sinon.stub(User, 'findOne').resolves(MockUser as User));
-  afterEach(() => sinon.restore())
+const MockToken: string = '123456'
 
-  it('should return status 200', async () => {
-  
-    const response = await chai.request(app)
+describe('Login', () => {
+  beforeEach(() => {
+      sinon.stub(User, 'findOne').resolves(MockUser as User),
+      sinon.stub(PasswordService, 'encryptedPassword').resolves(true),
+      sinon.stub(createToken, 'jwt').resolves(MockToken)
+  });
+    
+  afterEach(() => sinon.restore())
+    
+    it('should return status 200', async () => {
+
+      const response = await chai.request(app)
       .post('/login')
       .send(MockLogin)
-    expect(response.status).to.be.equal(200);
-  });
-
-  // it('should return token', async () => {
-  //   Sinon.stub(User, 'findOne').resolves();
-
-  //   const response = await chai.request(app)
-  //     .post('/login')
-  //   expect(response.body).to.be.deep.equal({})
-  // });
+      expect(response.status).to.be.equal(200);
+    });
+    
+    it('should return token', async () => {
+     
+      const response = await chai.request(app)
+        .post('/login')
+        .send(MockLogin)
+      expect(response.body).to.deep.equal({})
+    });
 });
