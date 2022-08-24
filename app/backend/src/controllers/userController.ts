@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-// import createToken from '../middlewares/createToken';
+import { ILogin } from '../interfaces/IUser';
+import createToken from '../middlewares/createToken';
 import UserService from '../services/userService';
 
 export default class UserController {
@@ -12,11 +13,11 @@ export default class UserController {
     res.status(200).json({ token });
   };
 
-  // validateToken = async (req: Request, res: Response): Promise<void> => {
-  //   const token = req.headers.authorization;
-  //   const user = await createToken.validateToken(token);
-  //   const { role } = await this.userService.findOne(user)
-
-  //   res.status(200).json('role');
-  // };
+  validateToken = async (req: Request, res: Response): Promise<void> => {
+    const token = req.headers.authorization;
+    const login = await createToken.validateToken(token) as ILogin;
+    const user = await this.userService.findOne(login.email);
+    const role = user?.role;
+    res.status(200).json({ role });
+  };
 }

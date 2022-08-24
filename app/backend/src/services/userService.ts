@@ -20,11 +20,12 @@ export default class UserService implements ILogin {
           'any.required': error400,
           'string.email': error401,
           'string.empty': error400,
+          'string.base': error401,
         }),
       password: Joi.string().required().messages({
         'any.required': error400,
-        'string.password': error401,
         'string.empty': error400,
+        'string.base': error401,
       }),
     });
     const { error } = schema.validate(data);
