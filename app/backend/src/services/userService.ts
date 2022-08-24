@@ -12,14 +12,14 @@ export default class UserService implements ILogin {
 
   validateBody = (data: ILogin) => {
     const schema = Joi.object({
-      email: Joi.string().email().empty().required()
+      email: Joi.string().email().required()
         .messages({
-          'any.required': 'All fields must be filled/400',
-          'string.email': 'Incorrect email or password/401',
+          'any.required': 'All fields must be filled|400',
+          'string.email': 'Incorrect email or password|401',
         }),
-      password: Joi.string().empty().required().messages({
-        'any.required': 'All fields must be filled/400',
-        'string.password': 'Incorrect email or password/401',
+      password: Joi.string().required().messages({
+        'any.required': 'All fields must be filled|400',
+        'string.password': 'Incorrect email or password|401',
       }),
     });
     const { error } = schema.validate(data);
@@ -38,21 +38,19 @@ export default class UserService implements ILogin {
     const user: IUser | null = await this.findOne(email);
 
     if (!user) {
-      const e = new Error('Not Found');
-      e.name = 'NotFoundError';
-      e.message = 'User not found/400';
+      const e = new Error('NotFoundError');
+      e.message = 'Unauthorized|401';
       throw e;
     }
-    console.log(password, 'password');
-    console.log(user.password, 'user password');
+
     const compare = PasswordService.encryptedPassword(password, user.password);
     if (compare === false) {
-      const e = new Error('Not Found');
-      e.name = 'NotFoundError';
-      e.message = 'Password not found/400';
+      const e = new Error('NotFoundError');
+      e.message = 'Unauthorized|401';
       throw e;
     }
     const token = await createToken.jwt({ email, password });
+
     return token;
   };
 }

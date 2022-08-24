@@ -1,5 +1,6 @@
 import * as express from 'express';
 import 'express-async-errors';
+import * as cors from 'cors';
 import errorMiddleware from './middlewares/errorMiddleware';
 import userRoutes from './routes/userRoutes';
 
@@ -25,6 +26,7 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+    this.app.use(cors());
     this.app.use('/login', userRoutes);
     this.app.use(errorMiddleware);
   }
