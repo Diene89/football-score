@@ -38,7 +38,7 @@ export default class UserService implements ILogin {
     const user: IUser | null = await this.findOne(email);
 
     if (!user) {
-      const e = new Error();
+      const e = new Error('Not Found');
       e.name = 'NotFoundError';
       e.message = 'User not found/400';
       throw e;
@@ -47,7 +47,7 @@ export default class UserService implements ILogin {
     console.log(user.password, 'user password');
     const compare = PasswordService.encryptedPassword(password, user.password);
     if (compare === false) {
-      const e = new Error();
+      const e = new Error('Not Found');
       e.name = 'NotFoundError';
       e.message = 'Password not found/400';
       throw e;
