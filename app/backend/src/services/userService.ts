@@ -4,6 +4,9 @@ import { ILogin, IUser } from '../interfaces/IUser';
 import createToken from '../middlewares/createToken';
 import PasswordService from './bcrypt';
 
+const error400 = 'All fields must be filled|400';
+const error401 = 'Incorrect email or password|401';
+
 export default class UserService implements ILogin {
   private user;
   constructor() { this.user = User; }
@@ -14,12 +17,14 @@ export default class UserService implements ILogin {
     const schema = Joi.object({
       email: Joi.string().email().required()
         .messages({
-          'any.required': 'All fields must be filled|400',
-          'string.email': 'Incorrect email or password|401',
+          'any.required': error400,
+          'string.email': error401,
+          'string.empty': error400,
         }),
       password: Joi.string().required().messages({
-        'any.required': 'All fields must be filled|400',
-        'string.password': 'Incorrect email or password|401',
+        'any.required': error400,
+        'string.password': error401,
+        'string.empty': error400,
       }),
     });
     const { error } = schema.validate(data);
@@ -39,14 +44,14 @@ export default class UserService implements ILogin {
 
     if (!user) {
       const e = new Error('NotFoundError');
-      e.message = 'Unauthorized|401';
+      e.message = error401;
       throw e;
     }
 
     const compare = PasswordService.encryptedPassword(password, user.password);
     if (compare === false) {
       const e = new Error('NotFoundError');
-      e.message = 'Unauthorized|401';
+      e.message = error401;
       throw e;
     }
     const token = await createToken.jwt({ email, password });
