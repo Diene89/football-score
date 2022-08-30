@@ -1,6 +1,6 @@
 import Match from '../database/models/Match';
 import Team from '../database/models/Team';
-import { IMatch } from '../interfaces/IMatch';
+import { IBodyMatch, IMatch } from '../interfaces/IMatch';
 
 export default class MatchService implements IMatch {
   private match;
@@ -49,5 +49,12 @@ export default class MatchService implements IMatch {
       ],
     });
     return matches;
+  };
+
+  create = async (body: IBodyMatch): Promise<IMatch> => {
+    const newMatch = await this.match.create({
+      ...body, inProgress: true,
+    });
+    return newMatch;
   };
 }
