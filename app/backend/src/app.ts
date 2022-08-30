@@ -3,6 +3,7 @@ import 'express-async-errors';
 import * as cors from 'cors';
 import errorMiddleware from './middlewares/errorMiddleware';
 import userRoutes from './routes/userRoutes';
+import teamRoutes from './routes/teamRoutes';
 
 class App {
   public app: express.Express;
@@ -28,6 +29,7 @@ class App {
     this.app.use(accessControl);
     this.app.use(cors());
     this.app.use('/login', userRoutes);
+    this.app.use('/teams', teamRoutes);
     this.app.use(errorMiddleware);
   }
 
