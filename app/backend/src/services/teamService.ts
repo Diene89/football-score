@@ -18,9 +18,11 @@ export default class TeamService implements ITeam {
       where: { id },
       raw: true,
     });
-    if (!dbTeam) {
+    console.log(dbTeam, 'aquiiiiiiiiiiiiiiiii');
+
+    if (dbTeam === null) {
       const e = new Error('NotFoundError');
-      e.message = 'Not Found';
+      e.message = 'Not Found|401';
       throw e;
     }
     return dbTeam;
