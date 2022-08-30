@@ -29,7 +29,25 @@ export default class MatchService implements IMatch {
         },
       ],
     });
-    console.log(matches);
+    return matches;
+  };
+
+  getInProgress = async (inProgress: boolean): Promise<IMatch[]> => {
+    const matches = await this.match.findAll({
+      where: { inProgress },
+      include: [
+        {
+          model: Team,
+          as: 'teamAway',
+          attributes: ['teamName'],
+        },
+        {
+          model: Team,
+          as: 'teamAway',
+          attributes: ['teamName'],
+        },
+      ],
+    });
     return matches;
   };
 }

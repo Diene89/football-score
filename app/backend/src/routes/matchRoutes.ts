@@ -5,8 +5,9 @@ import MatchService from '../services/matchService';
 const matchService = new MatchService();
 const matchController = new MatchController(matchService);
 
-const teamRouter = Router();
+const matchRouter = Router();
 
-teamRouter.get('/', async (req, res) => matchController.getAll(req, res));
+matchRouter.get('/', async (req, res) => matchController.getAll(req, res));
+matchRouter.get('/search', async (req, res) => matchController.getInProgress(req, res));
 
-export default teamRouter;
+export default matchRouter;
