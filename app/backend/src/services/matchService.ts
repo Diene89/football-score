@@ -1,6 +1,6 @@
 import Match from '../database/models/Match';
 import Team from '../database/models/Team';
-import { IBodyMatch, IMatch } from '../interfaces/IMatch';
+import { IBodyMatch, IMatch, IMessage } from '../interfaces/IMatch';
 
 export default class MatchService implements IMatch {
   private match;
@@ -56,5 +56,13 @@ export default class MatchService implements IMatch {
       ...body, inProgress: true,
     });
     return newMatch;
+  };
+
+  finishMatch = async (id: string): Promise<IMessage> => {
+    await this.match.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    return { message: 'Finished' };
   };
 }

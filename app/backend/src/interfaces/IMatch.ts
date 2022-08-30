@@ -6,6 +6,10 @@ export interface IBodyMatch {
   awayTeamGoals: number;
 }
 
+export interface IMessage {
+  message: 'Finished'
+}
+
 export interface IMatch extends IBodyMatch {
   inProgress: boolean;
   teamHome?: {

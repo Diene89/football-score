@@ -10,5 +10,6 @@ const matchRouter = Router();
 matchRouter.get('/', async (req, res) => matchController.getAll(req, res));
 matchRouter.get('/search', async (req, res) => matchController.getInProgress(req, res));
 matchRouter.post('/', async (req, res) => matchController.create(req, res));
+matchRouter.patch('/:id/finish', async (req, res) => matchController.finishMatch(req, res));
 
 export default matchRouter;

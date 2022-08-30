@@ -18,7 +18,6 @@ export default class TeamService implements ITeam {
       where: { id },
       raw: true,
     });
-    console.log(dbTeam, 'aquiiiiiiiiiiiiiiiii');
 
     if (dbTeam === null) {
       const e = new Error('NotFoundError');
