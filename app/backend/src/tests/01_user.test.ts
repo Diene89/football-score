@@ -53,6 +53,6 @@ describe('Login', () => {
       const response = await chai.request(app)
         .post('/login')
         .send(MockLogin)
-      expect(response.body).to.deep.equal({})
+      expect(response.body).to.deep.equal({token: MockToken})
     });
 });
