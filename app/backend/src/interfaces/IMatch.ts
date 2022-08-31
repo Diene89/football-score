@@ -1,13 +1,16 @@
-export interface IBodyMatch {
-  id?: number;
-  homeTeam: number;
+export interface IGoals {
   homeTeamGoals: number;
-  awayTeam: number;
   awayTeamGoals: number;
 }
 
+export interface IBodyMatch extends IGoals {
+  id?: number;
+  homeTeam: number;
+  awayTeam: number;
+}
+
 export interface IMessage {
-  message: 'Finished'
+  message: string,
 }
 
 export interface IMatch extends IBodyMatch {

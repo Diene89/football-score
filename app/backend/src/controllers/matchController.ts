@@ -49,4 +49,12 @@ export default class MatchController {
 
     res.status(200).json(message);
   };
+
+  update = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const data = req.body;
+    const message = await this.matchService.updateGoals(id, data);
+
+    res.status(200).json(message);
+  };
 }

@@ -1,6 +1,6 @@
 import Match from '../database/models/Match';
 import Team from '../database/models/Team';
-import { IBodyMatch, IMatch, IMessage } from '../interfaces/IMatch';
+import { IBodyMatch, IGoals, IMatch, IMessage } from '../interfaces/IMatch';
 
 export default class MatchService implements IMatch {
   private match;
@@ -10,8 +10,8 @@ export default class MatchService implements IMatch {
   teamAway?: { teamName: string; } | undefined;
   id?: number | undefined;
   homeTeam: number;
-  homeTeamGoals: number;
   awayTeam: number;
+  homeTeamGoals: number;
   awayTeamGoals: number;
 
   getAll = async (): Promise<IMatch[]> => {
@@ -19,7 +19,7 @@ export default class MatchService implements IMatch {
       include: [
         {
           model: Team,
-          as: 'teamAway',
+          as: 'teamHome',
           attributes: ['teamName'],
         },
         {
@@ -38,7 +38,7 @@ export default class MatchService implements IMatch {
       include: [
         {
           model: Team,
-          as: 'teamAway',
+          as: 'teamHome',
           attributes: ['teamName'],
         },
         {
@@ -69,5 +69,14 @@ export default class MatchService implements IMatch {
   findOne = async (id: string): Promise<IMatch | null> => {
     const dbMatch = await this.match.findByPk(id);
     return dbMatch;
+  };
+
+  updateGoals = async (id: string, data: IGoals): Promise<IMessage> => {
+    const { homeTeamGoals, awayTeamGoals } = data;
+    await this.match.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+    return { message: 'updated scoreboard' };
   };
 }
