@@ -13,7 +13,7 @@ export default class createToken {
   static async validateToken(token: string | undefined): Promise<string | JwtPayload> {
     if (!token) {
       const err = new Error('Invalid Token');
-      err.message = 'Unauthorized|401';
+      err.message = 'Token must be a valid token|401';
       throw err;
     }
     try {
@@ -21,7 +21,7 @@ export default class createToken {
       return user;
     } catch (error) {
       const err = new Error('Expired or invalid token');
-      err.message = 'Unauthorized|401';
+      err.message = 'Token must be a valid token|401';
       throw err;
     }
   }
