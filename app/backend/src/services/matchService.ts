@@ -65,4 +65,9 @@ export default class MatchService implements IMatch {
     );
     return { message: 'Finished' };
   };
+
+  findOne = async (id: string): Promise<IMatch | null> => {
+    const dbMatch = await this.match.findByPk(id);
+    return dbMatch;
+  };
 }

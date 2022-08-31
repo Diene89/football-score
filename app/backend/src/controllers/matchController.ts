@@ -29,6 +29,15 @@ export default class MatchController {
       e.message = 'It is not possible to create a match with two equal teams|401';
       throw e;
     }
+    const homeTeamCompare = await this.matchService.findOne(homeTeam);
+    const awayTeamCompare = await this.matchService.findOne(awayTeam);
+
+    if (!homeTeamCompare || !awayTeamCompare) {
+      const e = new Error('NotFoundError');
+      e.message = 'There is no team with such id!|404';
+      throw e;
+    }
+
     const match = await this.matchService.create(req.body);
 
     res.status(201).json(match);
