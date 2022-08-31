@@ -21,6 +21,14 @@ export default class MatchController {
   create = async (req: Request, res: Response): Promise<void | string> => {
     const token = req.headers.authorization;
     await createToken.validateToken(token);
+
+    const { homeTeam, awayTeam } = req.body;
+
+    if (homeTeam === awayTeam) {
+      const e = new Error('NotFoundError');
+      e.message = 'It is not possible to create a match with two equal teams|401';
+      throw e;
+    }
     const match = await this.matchService.create(req.body);
 
     res.status(201).json(match);
