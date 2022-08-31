@@ -39,5 +39,5 @@ export default class MatchController {
     const message = await this.matchService.finishMatch(id);
 
     res.status(200).json(message);
-  }
+  };
 }
