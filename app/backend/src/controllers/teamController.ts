@@ -13,7 +13,6 @@ export default class TeamController {
   getById = async (req: Request, res: Response): Promise<void | string> => {
     const { id } = req.params;
     const team = await this.teamService.getById(id);
-    console.log(req.params);
 
     res.status(200).json(team);
   };
