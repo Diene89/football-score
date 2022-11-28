@@ -1,6 +1,6 @@
 import { QueryTypes } from 'sequelize';
-import query from '../middlewares/query';
 import sequelize from '../database/models/index';
+import query from '../middlewares/query';
 
 export default class LeaderboardService {
   listAll = async () => {
